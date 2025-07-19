@@ -9,6 +9,19 @@
 - `.gitkeep` is used if there is empt folder. Because github don't push empty folders. so need to keep .gitkeep temporary in empty folders.
 - `.gitignore` is used to ignore any folder while pushing code to github
 - AWS Secret Manager
+- `pip install -e .`
+- `pip list`
+- Package is a project made by other developers that we can use it. 
+- Using `setup.py` we can convert our project to package.
+
+`
+Package        Version Editable project location
+-------------- ------- -----------------------------------
+DocumentPortal 0.1     D:\LLMOPs Krish Naik\DocumentPortal
+pip            25.1
+setuptools     78.1.1
+wheel          0.45.1
+`
 
 ### Minimum requirement for this project 
 1. LLM model (groq, openai, gemini, claude, huggingface, ollama)
