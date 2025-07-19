@@ -8,6 +8,7 @@
 
 - `.gitkeep` is used if there is empt folder. Because github don't push empty folders. so need to keep .gitkeep temporary in empty folders.
 - `.gitignore` is used to ignore any folder while pushing code to github
+- AWS Secret Manager
 
 ### Minimum requirement for this project 
 1. LLM model (groq, openai, gemini, claude, huggingface, ollama)
