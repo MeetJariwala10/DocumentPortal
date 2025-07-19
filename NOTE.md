@@ -10,9 +10,12 @@
 - `.gitignore` is used to ignore any folder while pushing code to github
 - AWS Secret Manager
 - `pip install -e .`
+- `-e .` is for local package
 - `pip list`
 - Package is a project made by other developers that we can use it. 
 - Using `setup.py` we can convert our project to package.
+- Those folders will be considered in package that are initialized with `__init__.py`
+- After installing `pip install -r requirements.txt` then `pip list`, you will see `DocumentPortal           0.1         D:\LLMOPs Krish Naik\DocumentPortal`
 
 `
 Package        Version Editable project location
