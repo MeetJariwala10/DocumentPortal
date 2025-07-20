@@ -1,32 +1,50 @@
-### **Project = Development (local) + Deployment (cloud -> AWS, Azure, GCP)**
+# DocumentPortal Project Notes
 
-1. Analysis of any document 
-2. Compare documents
-3. Talk to single document
-4. Talk with multiple different document
+## Overview
+A local development and cloud-deployable project for document analysis, comparison, and chat-based interactions with single or multiple documents.
 
+## Features
+- **Document Analysis:** Analyze any document.
+- **Document Comparison:** Compare two or more documents.
+- **Single Document Chat:** Interact conversationally with a single document.
+- **Multi-Document Chat:** Chat with multiple different documents at once.
 
-- `.gitkeep` is used if there is empt folder. Because github don't push empty folders. so need to keep .gitkeep temporary in empty folders.
-- `.gitignore` is used to ignore any folder while pushing code to github
-- AWS Secret Manager
-- `pip install -e .`
-- `-e .` is for local package
-- `pip list`
-- Package is a project made by other developers that we can use it. 
-- Using `setup.py` we can convert our project to package.
-- Those folders will be considered in package that are initialized with `__init__.py`
-- After installing `pip install -r requirements.txt` then `pip list`, you will see `DocumentPortal           0.1         D:\LLMOPs Krish Naik\DocumentPortal`
+## Setup & Installation
+1. Clone the repository and navigate to the project directory.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. (Optional) Install as a local package for development:
+   ```bash
+   pip install -e .
+   ```
+   - The `-e .` flag installs the project in editable mode.
+4. Check installed packages:
+   ```bash
+   pip list
+   ```
+   - You should see an entry like:
+     ```
+     Package        Version Editable project location
+     -------------- ------- -----------------------------------
+     DocumentPortal 0.1     D:\LLMOPs Krish Naik\DocumentPortal
+     pip            25.1
+     setuptools     78.1.1
+     wheel          0.45.1
+     ```
 
-`
-Package        Version Editable project location
--------------- ------- -----------------------------------
-DocumentPortal 0.1     D:\LLMOPs Krish Naik\DocumentPortal
-pip            25.1
-setuptools     78.1.1
-wheel          0.45.1
-`
+## Packaging Notes
+- Use `setup.py` to convert the project into a package.
+- Only folders containing an `__init__.py` file are included in the package.
+- Packages are reusable projects made by other developers.
 
-### Minimum requirement for this project 
-1. LLM model (groq, openai, gemini, claude, huggingface, ollama)
-2. Embedding model (Huggingface, openai, gemini)
-3. Vector Database (In Memory DB, On Disk DB, Cloud based DB)
+## Project Requirements
+- **LLM Model:** (e.g., groq, openai, gemini, claude, huggingface, ollama)
+- **Embedding Model:** (e.g., huggingface, openai, gemini)
+- **Vector Database:** (In-memory, on-disk, or cloud-based DB)
+
+## Additional Notes
+- `.gitkeep` is used to keep empty folders in version control (GitHub ignores empty folders).
+- `.gitignore` is used to exclude files/folders from version control.
+- AWS Secret Manager can be used for managing secrets securely.
