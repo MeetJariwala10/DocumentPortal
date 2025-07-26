@@ -20,11 +20,12 @@ class CustomLogger:
             level=logging.INFO,
         )
         
-    def get_logger(self,name=__file__):
+    def get_logger(self, name=__file__):
         return logging.getLogger(os.path.basename(name))
     
 if __name__ == "__main__":
-    logger=CustomLogger()
-    logger=logger.get_logger(__file__)
+    
+    logger = CustomLogger()
+    logger = logger.get_logger(__file__)
     logger.info("Custom logger initialized.")
         
