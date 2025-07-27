@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "DocumentPortal"
+version = "0.1"
+description = "Document Portal Application"
+authors = [{name = "Meet Jariwala"}]
+requires-python = ">=3.8"
+dependencies = [
+    "structlog",
+]
+
+[tool.setuptools.packages.find]
+where = ["."] 
