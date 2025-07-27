@@ -48,3 +48,4 @@ A local development and cloud-deployable project for document analysis, comparis
 - `.gitkeep` is used to keep empty folders in version control (GitHub ignores empty folders).
 - `.gitignore` is used to exclude files/folders from version control.
 - AWS Secret Manager can be used for managing secrets securely.
+- For configuration both `.yaml` and `.json` can be used
