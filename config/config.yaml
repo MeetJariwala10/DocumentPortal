@@ -1,3 +1,19 @@
+# -------------------------------------------------------------
+# config.yaml
+#
+# This file contains configuration settings for the Document Portal project.
+#
+# Sections:
+# - faiss_db: Settings for the vector database (used for document search)
+# - embedding_model: Which embedding model to use for text/vectorization
+# - retriever: How many top results to return when searching
+# - llm: Large Language Model settings (multiple providers supported)
+#     - groq: Settings for Groq LLM
+#     - google: Settings for Google Gemini LLM
+#
+# You can change these values to use different models, providers, or settings
+# without changing the code. This makes the project flexible and easy to update.
+# -------------------------------------------------------------
 faiss_db:
   collection_name: "document_portal"
 
