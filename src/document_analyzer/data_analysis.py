@@ -64,4 +64,4 @@ class DocumentAnalyzer:
             self.log.error("Metadata analysis failed", error=str(e))
             raise DocumentPortalException("Metadata extraction failed") from e
         
-    
+ 
