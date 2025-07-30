@@ -62,7 +62,8 @@ class CustomLogger:
         logging.basicConfig(
             level=logging.INFO,
             format="%(message)s",  # Structlog will handle JSON rendering
-            handlers=[console_handler, file_handler]
+            handlers=[console_handler, file_handler],
+            force=True
         )
 
         # Configure structlog for structured (JSON) logging
