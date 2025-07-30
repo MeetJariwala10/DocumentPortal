@@ -74,8 +74,10 @@ class DocumentHandler:
             # Ensure session directory exists
             os.makedirs(self.session_path, exist_ok=True)
 
-            # Log successful initialization
+            # Log successful initialization with session context for structured logging
+            # session_id and session_path are included as separate JSON fields for easier debugging and session tracking
             self.log.info("PDFHandler initialized", session_id=self.session_id, session_path=self.session_path)
+
 
         except Exception as e:
             self.log.error(f"Error initializing DocumentHandler: {e}")
@@ -101,7 +103,16 @@ class DocumentHandler:
             Saves the file with its original filename in the session directory.
         """
         try:
-            # Extract filename from uploaded file
+            # NOTE:
+            # Extract filename from uploaded file using basename() for safety
+            # uploaded_file.name might contain full path (e.g., "C:\Users\John\Documents\report.pdf")
+            # os.path.basename() extracts only the filename part (e.g., "report.pdf")
+            # This ensures clean, cross-platform compatible file paths
+            # 
+            # Examples:
+            # uploaded_file.name = "document.pdf" → basename() = "document.pdf"
+            # uploaded_file.name = "C:\Users\John\report.pdf" → basename() = "report.pdf"
+            # uploaded_file.name = "/home/user/file.pdf" → basename() = "file.pdf"
             filename = os.path.basename(uploaded_file.name)
             
             # Validate file type - only PDFs are allowed
@@ -111,8 +122,20 @@ class DocumentHandler:
             # Create full save path within session directory
             save_path = os.path.join(self.session_path, filename)
             
-            # Write file content to disk
+            # NOTE:
+            # Write file content to disk for permanent storage
+            # WHY SAVE TO DISK?
+            # 1. Uploaded files are temporary (in memory only) and will be lost when function ends
+            # 2. We need permanent storage so other functions can access the file later
+            # 3. Files should survive program restarts and be available for processing
+            # 4. Without saving, the file disappears and can't be read by read_pdf() method
+            # 5. Session-based organization requires files to be stored on disk
             with open(save_path, "wb") as f:
+
+                # NOTE:
+                # getbuffer() extracts the raw bytes from the uploaded file object
+                # This gives us the actual file data (not just a reference) so we can save it to disk
+                # Without getbuffer(), we would only have a file object reference, not the actual file content
                 f.write(uploaded_file.getbuffer())
 
             # Log successful save operation
@@ -149,7 +172,7 @@ class DocumentHandler:
             # Open PDF file using PyMuPDF
             with fitz.open(pdf_path) as doc:
                 # Iterate through each page and extract text
-                for page_num, page in enumerate(doc, start=1):
+                for page_num, page in enumerate(doc, start=1): # start=1 means to start index values from 1 instead of 0
                     # Extract text from current page and add page header
                     text_chunks.append(f"\n--- Page {page_num} ---\n{page.get_text()}")
             
@@ -196,6 +219,8 @@ if __name__ == "__main__":
                 file_path (str): Path to the file to simulate.
             """
             self.name = Path(file_path).name
+
+            # _file_path signals that this attribute is "intended to be private" and should not be accessed directly outside the class.
             self._file_path = file_path
         
         def getbuffer(self):
@@ -221,7 +246,7 @@ if __name__ == "__main__":
         # Test read operation
         content = handler.read_pdf(saved_path)
         print("PDF Content:")
-        print(content[:500])  # Print first 500 characters of the PDF content
+        print(content[:1000])  # Print first 500 characters of the PDF content
         
     except Exception as e:
         print(f"Error during testing: {e}")

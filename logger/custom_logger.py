@@ -5,7 +5,7 @@ A simple, beginner-friendly custom logger utility for Python projects.
 - Logs messages to both the console and a file.
 - Uses structlog for structured, JSON-formatted logs.
 - Each log entry includes a timestamp, log level, and custom fields.
-- Designed for easy integration and clear, readable logs for debugging and monitoring.
+- Designed for easy integ   ration and clear, readable logs for debugging and monitoring.
 """
 import os
 import logging
