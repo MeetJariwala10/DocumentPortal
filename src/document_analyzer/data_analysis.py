@@ -14,13 +14,21 @@ class DocumentAnalyzer:
     Automatically logs all actions and supports session-based organization.
     """
     def __init__(self):
+        
         self.log = CustomLogger().get_logger(__name__)
+        
         try:
-            self.loader=ModelLoader()
-            self.llm=self.loader.load_llm()
+            self.loader = ModelLoader()
+            self.llm = self.loader.load_llm()
             
             # Prepare parsers
             self.parser = JsonOutputParser(pydantic_object=Metadata)
+
+            # NOTE:
+            # Why OutputFixingParser?
+            # First, call your LLM with the normal prompt + “please output valid JSON for this schema.”
+            # Then, if the LLM’s response fails to parse (e.g. missing a bracket, wrong field name, extra text), it will automatically issue a follow‑up prompt to itself like “Hey, fix your last answer so it’s valid JSON matching the specified schema.”
+            # Finally, return you a well‑formed object satisfying your JsonOutputParser’s Pydantic model.
             self.fixing_parser = OutputFixingParser.from_llm(parser=self.parser, llm=self.llm)
             
             self.prompt = prompt
