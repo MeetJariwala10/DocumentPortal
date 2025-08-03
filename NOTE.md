@@ -28,7 +28,7 @@ A local development and cloud-deployable project for document analysis, comparis
      ```
      Package        Version Editable project location
      -------------- ------- -----------------------------------
-     DocumentPortal 0.1     D:\LLMOPs Krish Naik\DocumentPortal
+     DocumentPortal 0.1     D:\Directory_name\DocumentPortal
      pip            25.1
      setuptools     78.1.1
      wheel          0.45.1
