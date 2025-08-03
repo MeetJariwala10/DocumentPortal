@@ -6,7 +6,7 @@ from exception.custom_exception import DocumentPortalException
 from model.models import *
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import OutputFixingParser
-from prompt.prompt_library import *
+from prompt.prompt_library import PROMPT_REGISTRY
 
 class DocumentAnalyzer:
     """
@@ -31,7 +31,7 @@ class DocumentAnalyzer:
             # Finally, return you a well‑formed object satisfying your JsonOutputParser’s Pydantic model.
             self.fixing_parser = OutputFixingParser.from_llm(parser=self.parser, llm=self.llm)
             
-            self.prompt = prompt
+            self.prompt = PROMPT_REGISTRY["document_analysis"]
             
             self.log.info("DocumentAnalyzer initialized successfully")
             
