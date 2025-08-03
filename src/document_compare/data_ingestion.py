@@ -6,8 +6,11 @@ from datetime import datetime, timezone
 from logger.custom_logger import CustomLogger
 from exception.custom_exception import DocumentPortalException
 
-class DataIngestion:
+class DocumentIngestion:
     def __init__(self):
+        pass
+
+    def delete_existing_files(self):
         pass
 
     def save_uploaded_files(self):
