@@ -11,7 +11,17 @@ from langchain.output_parsers import OutputFixingParser
 
 class DocumentComparatorLLM:
     def __init__(self):
-        pass
+        self.log = CustomLogger().get_logger(__name__)
+        self.loader - ModelLoader()
+        self.llm = self.loader.load_llm()
+        self.parser = JsonOutputParser(pydantic_object=SummaryResponse)
+        self.fixing_parser = OutputFixingParser.from_llm(
+            parser=self.parser,
+            llm=self.llm
+        )
+        self.prompt = PROMPT_REGISTRY["document_comparison"]
+        self.chain = self.prompt | self.llm | self.parser
+        self.log.info("DocumentComparatorLLM initialized", model=self.llm)
 
     def compare_documents(self):
         pass
