@@ -12,7 +12,7 @@ from exception.custom_exception import DocumentPortalException
 from logger.custom_logger import CustomLogger
 from prompt.prompt_library import PROMPT_REGISTRY
 from model.models import PromptType
-
+import streamlit as st
 
 class ConversationalRAG:
     def __init__(self, session_id: str, retriever):
@@ -67,9 +67,17 @@ class ConversationalRAG:
             self.log.error("Error loading LLM via ModelLoader", error=str(e))
             raise DocumentPortalException("Failed to load the LLM", sys)
 
-    def _get_session_history(self, session_id: str):
+    def _get_session_history(self, session_id: str) -> BaseChatMessageHistory:
         try:
-            pass
+            return ChatMessageHistory()
+            # if "store" not in st.session_state:
+            #     st.session_state.score = {}
+
+            # if session_id not in st.session_state.store:
+            #     st.session_state.store[session_id] = ChatMessageHistory()
+            #     self.log.info("New chat session history created", session_id=session_id)
+
+            # return st.session_state.store[session_id]
         except Exception as e:
             self.log.error("Failed to access session history", error=str(e), session_id=session_id)
             raise DocumentPortalException("Failed to retrieve session history", sys)

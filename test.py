@@ -139,7 +139,7 @@ def test_conversational_rag_on_pdf(pdf_path: str, question: str):
 
 if __name__ == "__main__":
     pdf_path = "data\\single_document_chat\\NIPS-2017-attention-is-all-you-need-Paper.pdf"
-    question = "what is the main topic of this document"
+    question = "what is the significance of attention mechanism. explain it in simple terms"
 
     if not Path(pdf_path).exists():
         print(f"PDF file does not exists at: {pdf_path}")

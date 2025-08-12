@@ -5,3 +5,4 @@ venv/
 pycache
 logs/
 *.pyc
+faiss_index/
