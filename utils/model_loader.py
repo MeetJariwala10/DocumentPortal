@@ -87,7 +87,7 @@ class ModelLoader:
         log.info("Loading LLM...")
         
         # Get the provider key from environment or default to 'groq'
-        provider_key = os.getenv("LLM_PROVIDER", "groq")  # Default groq
+        provider_key = os.getenv("LLM_PROVIDER", "google")  # Default groq
         if provider_key not in llm_block:
             # Log and raise error if provider is not found in config
             log.error("LLM provider not found in config", provider_key=provider_key)
@@ -115,7 +115,7 @@ class ModelLoader:
         elif provider == "groq":
             llm = ChatGroq(
                 model = model_name,
-                api_key = self.api_keys["GROQ_API_KEY"],
+                api_key = self.api_keys["GROQ_API_KEY"], #type: ignore
                 temperature = temperature,
             )
             return llm
