@@ -132,7 +132,7 @@ async def chat_query(
             raise HTTPException(status_code=400, detail="session_id is required when use_session_dirs=True")
         
         # Prepare FAISS index path
-        index_dir = os.path.join(FAISS_BASE, session_id) if use_session_dirs else FAISS_BASE: # type: ignore
+        index_dir = os.path.join(FAISS_BASE, session_id) if use_session_dirs else FAISS_BASE # type: ignore
 
         if not os.path.isdir(index_dir):
             raise HTTPException(status_code=404, detail=f"FAISS index not found at: {index_dir}")
