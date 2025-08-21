@@ -9,3 +9,4 @@ faiss_index/
 .vscode
 __pycache__
 archive/
+data/
