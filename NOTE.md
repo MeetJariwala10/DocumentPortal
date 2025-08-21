@@ -49,3 +49,6 @@ A local development and cloud-deployable project for document analysis, comparis
 - `.gitignore` is used to exclude files/folders from version control.
 - AWS Secret Manager can be used for managing secrets securely.
 - For configuration both `.yaml` and `.json` can be used
+- `git checkout -b dev`
+- `git switch main`
+- `git branch`
