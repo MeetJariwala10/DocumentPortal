@@ -6,7 +6,6 @@ import shutil
 import uuid
 import hashlib
 from pathlib import Path
-from datetime import datetime, timezone
 from typing import Iterable, List, Optional, Dict, Any
 
 import fitz # PyMuPDF
@@ -16,7 +15,6 @@ from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, Te
 from langchain_community.vectorstores import FAISS
 
 from utils.model_loader import ModelLoader
-from logger.custom_logger import CustomLogger
 from exception.custom_exception import DocumentPortalException
 
 from utils.file_io import generate_session_id, save_uploaded_files
