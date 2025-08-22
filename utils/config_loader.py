@@ -1,30 +1,35 @@
-"""
-config_loader.py
+# import yaml
 
-Utility for loading YAML configuration files in the Document Portal project.
-This helps keep settings (like model names, database info, etc.) separate from code,
-so you can easily update them without changing the program itself.
-"""
+
+# def load_config(config_path: str = "config/config.yaml") -> dict:
+#     with open(config_path, "r") as file:
+#         config=yaml.safe_load(file)
+#     return config
+
+# utils/config_loader.py
+from pathlib import Path
+import os
 import yaml
 
+def _project_root() -> Path:
+    # .../utils/config_loader.py -> parents[1] == project root
+    return Path(__file__).resolve().parents[1]
 
-def load_config(config_path: str = "config\\config.yaml") -> dict:
+def load_config(config_path: str | None = None) -> dict:
     """
-    Loads a YAML configuration file and returns its contents as a Python dictionary.
-
-    Args:
-        config_path (str): Path to the YAML config file. Defaults to 'config/config.yaml'.
-
-    Returns:
-        dict: The configuration data loaded from the YAML file.
+    Resolve config path reliably irrespective of CWD.
+    Priority: explicit arg > CONFIG_PATH env > <project_root>/config/config.yaml
     """
-    # Open the YAML config file in read mode
-    with open(config_path, "r") as file:
-        # Parse the YAML file and load its contents into a Python dictionary
-        config = yaml.safe_load(file)
-    # Return the loaded configuration dictionary
-    return config
+    env_path = os.getenv("CONFIG_PATH")
+    if config_path is None:
+        config_path = env_path or str(_project_root() / "config" / "config.yaml")
 
+    path = Path(config_path)
+    if not path.is_absolute():
+        path = _project_root() / path
 
-# Example usage: Load the configuration when this file is run
-load_config("config\\config.yaml")
+    if not path.exists():
+        raise FileNotFoundError(f"Config file not found: {path}")
+
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
