@@ -8,7 +8,7 @@ so you can easily update them without changing the program itself.
 import yaml
 
 
-def load_config(config_path: str = "config\config.yaml") -> dict:
+def load_config(config_path: str = "config\\config.yaml") -> dict:
     """
     Loads a YAML configuration file and returns its contents as a Python dictionary.
 
