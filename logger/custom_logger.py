@@ -88,10 +88,10 @@ class CustomLogger:
 
 
 # --- Usage Example ---
-if __name__ == "__main__":
-    # Create a logger instance for this file
-    logger = CustomLogger().get_logger(__file__)
-    # Log an info message (with extra fields)
-    logger.info("User uploaded a file", user_id=123, filename="report.pdf")
-    # Log an error message (with extra fields)
-    logger.error("Failed to process PDF", error="File not found", user_id=123)
+# if __name__ == "__main__":
+#     # Create a logger instance for this file
+#     logger = CustomLogger().get_logger(__file__)
+#     # Log an info message (with extra fields)
+#     logger.info("User uploaded a file", user_id=123, filename="report.pdf")
+#     # Log an error message (with extra fields)
+#     logger.error("Failed to process PDF", error="File not found", user_id=123)
