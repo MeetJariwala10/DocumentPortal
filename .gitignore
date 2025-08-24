@@ -1,6 +1,5 @@
 documentportal
 .env
-DocumentPortal.egg-info
 venv/
 pycache
 logs/
@@ -10,3 +9,45 @@ faiss_index/
 __pycache__
 archive/
 data/
+
+
+# Python cache & virtualenv
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+env/
+venv/
+*.egg-info/
+*.egg
+*.log
+
+# OS & editor files
+.DS_Store
+.vscode/
+.idea/
+
+# LangChain-related
+faiss_index/
+*.faiss
+*.pkl
+
+# Data & archive
+data/
+archive/
+main_archive/
+*.pdf
+
+# Secrets & configs
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# Build/Dist
+dist/
+build/
+DocumentPortal.egg-info
