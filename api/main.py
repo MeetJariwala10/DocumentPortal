@@ -30,10 +30,21 @@ app = FastAPI(title="Document Portal API", version="0.1")
 # Set up static files and templates for the web interface
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Mount the React build files
-app.mount("/assets", StaticFiles(directory=str(BASE_DIR / "frontend/dist/assets")), name="assets")
-# Mount other static files from React build
-app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+# Mount the React build files (only if they exist)
+assets_dir = BASE_DIR / "frontend/dist/assets"
+static_dir = BASE_DIR / "static"
+
+if assets_dir.exists():
+    app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+    log.info(f"Mounted assets directory: {assets_dir}")
+else:
+    log.warning(f"Assets directory not found: {assets_dir}")
+
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+    log.info(f"Mounted static directory: {static_dir}")
+else:
+    log.warning(f"Static directory not found: {static_dir}")
 
 # React build is the primary UI
 
