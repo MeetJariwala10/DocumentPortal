@@ -1,10 +1,10 @@
 import os
 from typing import List, Optional, Any, Dict
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+
 from pathlib import Path
 
 # Import document processing components
@@ -29,8 +29,13 @@ app = FastAPI(title="Document Portal API", version="0.1")
 
 # Set up static files and templates for the web interface
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Mount the React build files
+app.mount("/assets", StaticFiles(directory=str(BASE_DIR / "frontend/dist/assets")), name="assets")
+# Mount other static files from React build
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
-templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
+# React build is the primary UI
 
 # Configure CORS to allow requests from any origin
 app.add_middleware(
@@ -41,24 +46,49 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Create API router for all API endpoints
+from fastapi import APIRouter
+api_router = APIRouter(prefix="/api")
+
 # API Routes
 
 @app.get("/", response_class=HTMLResponse)
-async def serve_ui(request: Request):
-    """Serve the main web interface HTML page."""
-    log.info("Serving UI homepage.")
-    resp = templates.TemplateResponse("index.html", {"request": request})
-    resp.headers["Cache-Control"] = "no-store"  # Prevent caching for fresh content
-    return resp
+@app.get("/{path:path}", response_class=HTMLResponse)
+async def serve_ui(request: Request, path: str = ""):
+    """Serve the React frontend for all non-API routes to support client-side routing."""
+    # Only handle API routes through their specific endpoints
+    # Don't raise 404 for client-side routes that should be handled by React Router
+    
+    # Check if the path is a static file in the React build directory
+    static_file_path = BASE_DIR / "frontend" / "dist" / path
+    if path and static_file_path.exists() and static_file_path.is_file():
+        log.info(f"Serving static file: {path}")
+        return FileResponse(static_file_path)
+        
+    log.info(f"Serving React frontend for path: {path}")
+    # Read the React index.html file
+    index_path = BASE_DIR / "frontend" / "dist" / "index.html"
+    
+    try:
+        with open(index_path, "r") as f:
+            html_content = f.read()
+        
+        # Return the HTML content
+        response = HTMLResponse(content=html_content)
+        response.headers["Cache-Control"] = "no-store"  # Prevent caching for fresh content
+        return response
+    except FileNotFoundError:
+        log.error(f"React build files not found at {index_path}. Run 'npm run build' in the frontend/ directory.")
+        raise HTTPException(status_code=500, detail="React build not found. Please build the frontend (npm run build).")
 
-@app.get("/health")
+@api_router.get("/health")
 def health() -> Dict[str, str]:
     """Health check endpoint for monitoring and deployment verification."""
     log.info("Health check passed.")
     return {"status": "ok", "service": "document-portal"}
 
 # ---------- ANALYZE ----------
-@app.post("/analyze")
+@api_router.post("/analyze")
 async def analyze_document(file: UploadFile = File(...)) -> Any:
     """Analyze a PDF document using LLM to extract metadata and insights.
     
@@ -98,7 +128,7 @@ async def analyze_document(file: UploadFile = File(...)) -> Any:
         raise HTTPException(status_code=500, detail=f"Analysis failed: {e}")
 
 # ---------- COMPARE ----------
-@app.post("/compare")
+@api_router.post("/compare")
 async def compare_documents(reference: UploadFile = File(...), actual: UploadFile = File(...)) -> Any:
     """Compare two PDF documents to identify differences using LLM analysis.
     
@@ -143,7 +173,7 @@ async def compare_documents(reference: UploadFile = File(...), actual: UploadFil
         raise HTTPException(status_code=500, detail=f"Comparison failed: {e}")
 
 # ---------- CHAT: INDEX ----------
-@app.post("/chat/index")
+@api_router.post("/chat/index")
 async def chat_build_index(
     files: List[UploadFile] = File(...),
     session_id: Optional[str] = Form(None),
@@ -205,7 +235,7 @@ async def chat_build_index(
         raise HTTPException(status_code=500, detail=f"Indexing failed: {e}")
 
 # ---------- CHAT: QUERY ----------
-@app.post("/chat/query")
+@api_router.post("/chat/query")
 async def chat_query(
     question: str = Form(...),
     session_id: Optional[str] = Form(None),
@@ -258,6 +288,10 @@ async def chat_query(
     except Exception as e:
         log.exception("Chat query failed")
         raise HTTPException(status_code=500, detail=f"Query failed: {e}")
+
+
+# Include the API router in the app
+app.include_router(api_router)
 
 # command for executing the fast api
 # uvicorn api.main:app --port 8080 --reload    
