@@ -51,4 +51,3 @@ A local development and cloud-deployable project for document analysis, comparis
 - For configuration both `.yaml` and `.json` can be used
 - `git checkout -b dev`
 - `git switch main`
-- `git branch`
