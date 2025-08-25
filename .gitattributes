@@ -1,0 +1,9 @@
+# Count Jupyter Notebooks as Jupyter (so it’s visible)
+*.ipynb linguist-detectable=true
+*.ipynb linguist-language=Jupyter Notebook
+
+# Ensure Python, HTML, CSS, and JS are also detected
+*.py   linguist-language=Python
+*.html linguist-language=HTML
+*.css  linguist-language=CSS
+*.js   linguist-language=JavaScript
