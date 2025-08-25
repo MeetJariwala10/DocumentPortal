@@ -63,8 +63,7 @@ api_router = APIRouter(prefix="/api")
 
 # API Routes
 
-@app.get("/", response_class=HTMLResponse)
-@app.get("/{path:path}", response_class=HTMLResponse)
+# Define the UI handler without registering routes yet, so we can register it after API routes
 async def serve_ui(request: Request, path: str = ""):
     """Serve the React frontend for all non-API routes to support client-side routing."""
     # Only handle API routes through their specific endpoints
@@ -301,8 +300,12 @@ async def chat_query(
         raise HTTPException(status_code=500, detail=f"Query failed: {e}")
 
 
-# Include the API router in the app
+# Include the API router in the app first, so /api/* routes take precedence
 app.include_router(api_router)
+
+# Now register the catch-all UI routes AFTER API routes to avoid intercepting /api/*
+app.add_api_route("/", serve_ui, methods=["GET"], response_class=HTMLResponse)
+app.add_api_route("/{path:path}", serve_ui, methods=["GET"], response_class=HTMLResponse)
 
 # command for executing the fast api
 # uvicorn api.main:app --port 8080 --reload    
