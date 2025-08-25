@@ -2,15 +2,16 @@
 
 A comprehensive document processing platform with analysis, comparison, and chat capabilities powered by LLMs and RAG.
 
-![Document Portal](https://img.shields.io/badge/Document-Portal-blue)
+[![Document Portal](https://img.shields.io/badge/Document-Portal-blue)](https://github.com/yourusername/DocumentPortal)
 
 ## 🌟 Features
 
 - **Document Analysis**: Extract structured metadata from PDF documents using LLMs
 - **Document Comparison**: Compare two PDFs and identify differences with LLM-powered analysis
 - **Document Chat**: Chat with your documents using RAG (Retrieval-Augmented Generation)
-- **Web UI**: Clean and intuitive interface for all functionalities
+- **Web UI**: Clean and intuitive interface with responsive design
 - **API**: FastAPI backend with well-documented endpoints
+- **Production-Ready**: Optimized build process and routing configuration
 
 ## 📋 Requirements
 
@@ -64,16 +65,26 @@ A comprehensive document processing platform with analysis, comparison, and chat
 
 ```
 ├── api/                # FastAPI application
+│   ├── main.py         # Main API entry point
+│   └── src/            # Backend modules
+│       ├── document_analyzer/     # Document analysis
+│       ├── document_chat/         # RAG-based document chat
+│       ├── document_compare/      # Document comparison
+│       └── document_ingestion/    # Document ingestion pipeline
 ├── config/             # Configuration files
 ├── exception/          # Custom exception handling
+├── frontend/           # React frontend
+│   ├── src/
+│   │   ├── components/ # Reusable UI components
+│   │   ├── hooks/      # Custom React hooks
+│   │   ├── layouts/    # Page layouts
+│   │   ├── pages/      # Main application pages
+│   │   └── services/   # API service functions
+│   ├── public/         # Static assets
+│   └── index.html      # HTML entry point
 ├── logger/             # Logging utilities
 ├── model/              # Data models and schemas
 ├── prompt/             # LLM prompts
-├── src/                # Core functionality modules
-│   ├── document_analyzer/     # Document analysis
-│   ├── document_chat/         # RAG-based document chat
-│   ├── document_compare/      # Document comparison
-│   └── document_ingestion/    # Document ingestion pipeline
 ├── static/             # Static assets (CSS, JS)
 ├── templates/          # HTML templates
 ├── utils/              # Utility functions
@@ -96,6 +107,30 @@ Run tests using pytest:
 ```bash
 pytest tests/
 ```
+
+## 🚀 Recent Improvements
+
+### Frontend
+
+- **Reusable Components**: Created common components to reduce code duplication
+  - `LoadingButton`: Prevents UI shifting during loading states
+  - `FileUploadButton`: Centralizes file upload logic
+- **Custom Hooks**: Added hooks for API interactions
+  - `useApi`: Manages loading, error, and response states
+- **Routing Fixes**: Improved routing with proper handling of page refreshes
+- **Build Optimizations**:
+  - Consolidated API proxies
+  - Configured build output and sourcemaps
+  - Added manual chunking for better performance
+- **UI Improvements**:
+  - Added custom 404 page
+  - Updated favicon and document title
+
+### Backend
+
+- **API Organization**: Reorganized routes with `/api` prefix
+- **Error Handling**: Improved with detailed error messages
+- **API Interceptors**: Added for consistent behavior
 
 ## 🐳 Docker
 
