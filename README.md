@@ -141,6 +141,36 @@ docker build -t document-portal .
 docker run -p 8080:8080 document-portal
 ```
 
+## 🖼️ Screenshots
+
+The following screenshots live in `docs/screenshots/` and reflect the current UI.
+
+- **Home**
+  
+  ![Home](docs/screenshots/main-page.png)
+
+- **Document Analysis**
+  
+  ![Document Analysis - page](docs/screenshots/doc-analysis-main-page.png)
+  
+  ![Document Analysis - response 1](docs/screenshots/doc-analysis-response-1.png)
+  
+  ![Document Analysis - response 2](docs/screenshots/doc-analysis-response-2.png)
+  
+  ![Document Analysis - response 3](docs/screenshots/doc-analysis-response-3.png)
+
+- **Document Comparison**
+  
+  ![Document Comparison - page](docs/screenshots/Document-Compare-main-page.png)
+  
+  ![Document Comparison - results](docs/screenshots/Document-Compare-response.png)
+
+- **Document Chat**
+  
+  ![Document Chat - page](docs/screenshots/Document-Chat-main-page.png)
+  
+  ![Document Chat - response](docs/screenshots/Document-Chat-response.png)
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
